@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Угадай число</title>
+   
+</head>
+<body>
+    <h1>Угадай число от 1 до 100</h1>
+    <p>У вас есть 3 попытки!</p>
+    
+    <input type="number" id="guessInput" min="1" max="100">
+    <button onclick="checkGuess()">Проверить</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 3;
+        
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            const resultDiv = document.getElementById('result');
+            
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                resultDiv.innerHTML = 'Введите число от 1 до 100';
+                return;
+            }
+            
+            attempts--;
+            
+            if (guess === secretNumber) {
+                resultDiv.innerHTML = 'Выугадали число';
+                disableInput();
+            } else {
+                const hint = guess < secretNumber ? 'Загаданное число больше' : ', Загаданное число меньше';
+                resultDiv.innerHTML = `${hint}. Осталось попыток: ${attempts}`;
+                
+                if (attempts === 0) {
+                    resultDiv.innerHTML += `<br>Загаданное число: ${secretNumber}`;
+                    disableInput();
+                }
+            }
+        }
+        
+        function disableInput() {
+            document.getElementById('guessInput').disabled = true;
+            document.querySelector('button').disabled = true;
+        }
+    </script>
+</body>
+</html>
