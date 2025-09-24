@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Генератор случайных чисел</title>
+
+</head>
+<body>
+    <h1>Генератор случайных чисел</h1>
+    <p>Нажмите кнопку, чтобы получить 3 случайных числа</p>
+    
+    <div id="numbers"></div>
+    
+    <button onclick="generateNumbers()">Сгенерировать числа</button>
+    
+    <script>
+        function generateNumbers() {
+            const numbers = [];
+        
+            while (numbers.length < 3) {
+                const num = Math.floor(Math.random() * 100) + 1;
+                if (!numbers.includes(num)) {
+                    numbers.push(num);
+                }
+            }
+        
+            document.getElementById('numbers').innerHTML = 
+                `Сгенерированные числа: <br>` +
+                numbers.join('<br>');
+        }
+    </script>
+</body>
+</html>
