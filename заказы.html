@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scfle=1.0">
+        <title> Document</title>
+        <style>
+        body {font-family: Georgia, 'Times New Roman', Times, serif; max-width: 700px; margin: 10px auto; padding: 20px; color:rgb(205, 115, 46); background-color: rgb(241, 195, 125);}
+    
+        input {padding: 15px; margin: 15px; width: 50px; height: 18px; line-height: 8px;}
+        button {background-color: rgb(205, 115, 46);}
+        button:hover {background-color: rgb(91, 87, 84);}
+        
+    </style>
+
+    </head>
+
+    <body>
+        
+        <form>
+            <label for="name">Выберите пиццу</label> <br/> 
+
+            </label>
+            <input type="text" placeholder="название пиццы" id="name">
+            <button id="add" onclick="add()" type="button">Добавить</button>
+
+        </form>
+
+        <div>
+            <p>Меню:</p>
+
+            <ul> 
+                <li>Пепперони фреш <samp style="color: rgb(137, 145, 145);">(от 259 рублей)</samp> <input type="checkbox"></li>
+                <li>Терияки <samp style="color: rgb(137, 145, 145);">(от 339 рублей)</samp><input type="checkbox"></li>
+                <li>Чесночный ципленок <samp style="color: rgb(137, 145, 145);">(от 259 рублей)</samp><input type="checkbox"></li>
+                <!-- li*20> lorem -->
+            </ul>
+         
+        <div class="center-image">
+            <img src="https://media.dodostatic.net/image/r:292x292/0198bf57bc517218ab93c762f4b0193e.avif" 
+                 width="200" 
+                height="200" 
+                alt="">
+
+            <img src="https://media.dodostatic.net/image/r:292x292/0198da9ee2dd75038d9b6f7f23810d42.avif" 
+                 width="200" 
+                height="200" 
+                alt="">
+            
+            <img src="https://media.dodostatic.net/image/r:292x292/0198bf24170179679a7872f2ddf16d18.avif" 
+                 width="200" 
+                height="200" 
+                alt="">
+        </div>
+
+
+        </div>
+        <script>
+           // console.log('Hello');
+
+           let nameImput = document.getElementById('name');
+           function add() {
+            console.log(nameImput.value)
+           }
+
+        </script>
+ 
+    </body>
+
+</html>
