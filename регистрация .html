@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход/Регистрация</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login" class="form-container">
+        <h2>Вход</h2>
+        <form onsubmit="login(); return false;">
+            <input type="text" id="loginUser" placeholder="Логин"><br>
+            <input type="password" id="loginPass" placeholder="Пароль"><br>
+            <button>Войти</button>
+        </form>
+        <button onclick="showRegister()">Регистрация</button>
+    </div>
+
+    <div id="register" class="form-container" style="display:none">
+        <h2>Регистрация</h2>
+        <form onsubmit="register(); return false;">
+            <input type="text" id="regUser" placeholder="Логин"><br>
+            <input type="password" id="regPass" placeholder="Пароль"><br>
+            <input type="password" id="regPass2" placeholder="Повторите пароль"><br>
+            <button>Зарегистрироваться</button>
+        </form>
+        <button onclick="showLogin()">Вход</button>
+    </div>
+
+    <script>
+        function showRegister() {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('register').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('register').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+
+        function login() {
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+            if(user && pass) {
+                alert('Вход: ' + user);
+            } else {
+                alert('Заполните все поля');
+            }
+        }
+
+        function register() {
+            const user = document.getElementById('regUser').value;
+            const pass = document.getElementById('regPass').value;
+            const pass2 = document.getElementById('regPass2').value;
+            
+            if(!user || !pass) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            if(pass !== pass2) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            alert('Регистрация: ' + user);
+            showLogin();
+        }
+    </script>
+</body>
+</html>
