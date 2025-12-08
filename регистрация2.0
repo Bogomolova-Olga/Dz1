@@ -1,0 +1,247 @@
+import React, { useState } from 'react';
+
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  input: {
+    padding: '12px 15px',
+    border: '1px solid #ddd',
+    borderRadius: '6px',
+    fontSize: '16px',
+    transition: 'border-color 0.3s',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+
+  button: {
+    padding: '14px',
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    border: 'none',
+    borderRadius: '6px',
+    fontSize: '16px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s, transform 0.2s',
+    marginTop: '10px',
+    width: '100%',
+  },
+  switchButton: {
+    background: 'none',
+    border: 'none',
+    color: '#4a90e2',
+    fontSize: '14px',
+    cursor: 'pointer',
+    marginTop: '20px',
+    padding: '8px',
+    textDecoration: 'underline',
+    width: '100%',
+  },
+  error: {
+    color: '#e74c3c',
+    fontSize: '12px',
+    marginTop: '5px',
+    textAlign: 'left',
+  },
+  passwordHint: {
+    fontSize: '12px',
+    color: '#888',
+    marginTop: '5px',
+    textAlign: 'left',
+  },
+};
+
+function LoginForm({ onSubmit }) {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [focusedField, setFocusedField] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ login, password });
+  };
+
+  const inputStyle = (fieldName) => ({
+    ...styles.input,
+    ...(focusedField === fieldName ? styles.inputFocus : {}),
+  });
+
+  return (
+    <form onSubmit={handleSubmit} style={styles.form}>
+      <div style={styles.inputGroup}>
+        <label style={styles.label}>Логин:</label>
+        <input
+          type="text"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+          onFocus={() => setFocusedField('login')}
+          onBlur={() => setFocusedField(null)}
+          style={inputStyle('login')}
+          placeholder="Введите логин"
+          required
+        />
+      </div>
+      <div style={styles.inputGroup}>
+        <label style={styles.label}>Пароль:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onFocus={() => setFocusedField('password')}
+          onBlur={() => setFocusedField(null)}
+          style={inputStyle('password')}
+          placeholder="Введите пароль"
+          required
+        />
+        <div style={styles.passwordHint}>Минимум 6 символов</div>
+      </div>
+      <button 
+        type="submit" 
+        style={styles.button}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.buttonHover.backgroundColor}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = styles.button.backgroundColor}
+        onMouseDown={(e) => e.currentTarget.style.transform = styles.buttonActive.transform}
+        onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+      >
+        Войти
+      </button>
+    </form>
+  );
+}
+
+function RegisterForm({ onSubmit }) {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [error, setError] = useState('');
+  const [focusedField, setFocusedField] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (password.length < 6) {
+      setError('Пароль должен содержать минимум 6 символов');
+      return;
+    }
+    
+    if (password !== repeatPassword) {
+      setError('Пароли не совпадают!');
+      return;
+    }
+    
+    setError('');
+    onSubmit({ login, password });
+  };
+
+  const inputStyle = (fieldName) => ({
+    ...styles.input,
+    ...(focusedField === fieldName ? styles.inputFocus : {}),
+  });
+
+  return (
+    <form onSubmit={handleSubmit} style={styles.form}>
+      <div style={styles.inputGroup}>
+        <label style={styles.label}>Логин:</label>
+        <input
+          type="text"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+          onFocus={() => setFocusedField('login')}
+          onBlur={() => setFocusedField(null)}
+          style={inputStyle('login')}
+          placeholder="Придумайте логин"
+          required
+        />
+      </div>
+      <div style={styles.inputGroup}>
+        <label style={styles.label}>Пароль:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            if (error) setError('');
+          }}
+          onFocus={() => setFocusedField('password')}
+          onBlur={() => setFocusedField(null)}
+          style={inputStyle('password')}
+          placeholder="Придумайте пароль"
+          required
+        />
+        <div style={styles.passwordHint}>Минимум 6 символов</div>
+      </div>
+      <div style={styles.inputGroup}>
+        <label style={styles.label}>Повторите пароль:</label>
+        <input
+          type="password"
+          value={repeatPassword}
+          onChange={(e) => {
+            setRepeatPassword(e.target.value);
+            if (error) setError('');
+          }}
+          onFocus={() => setFocusedField('repeatPassword')}
+          onBlur={() => setFocusedField(null)}
+          style={inputStyle('repeatPassword')}
+          placeholder="Повторите пароль"
+          required
+        />
+      </div>
+      {error && <div style={styles.error}>{error}</div>}
+      <button 
+        type="submit" 
+        style={styles.button}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.buttonHover.backgroundColor}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = styles.button.backgroundColor}
+        onMouseDown={(e) => e.currentTarget.style.transform = styles.buttonActive.transform}
+        onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+      >
+        Зарегистрироваться
+      </button>
+    </form>
+  );
+}
+
+function AuthContainer() {
+  const [isRegistering, setIsRegistering] = useState(false);
+
+  const handleSwitch = () => {
+    setIsRegistering(!isRegistering);
+  };
+
+  const handleAuth = (data) => {
+    if (isRegistering) {
+      alert(`Регистрация выполнена: ${data.login}`);
+    } else {
+      alert(`Вход выполнен: ${data.login}`);
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <div style={styles.authBox}>
+        <h2 style={styles.title}>
+          {isRegistering ? 'Регистрация' : 'Авторизация'}
+        </h2>
+        {isRegistering ? (
+          <RegisterForm onSubmit={handleAuth} />
+        ) : (
+          <LoginForm onSubmit={handleAuth} />
+        )}
+        <button 
+          onClick={handleSwitch} 
+          style={styles.switchButton}
+        >
+          {isRegistering ? 'Уже есть аккаунт? Войти' : 'Зарегистрироваться'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default AuthContainer;
